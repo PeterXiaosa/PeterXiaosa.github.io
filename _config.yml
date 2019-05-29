@@ -18,9 +18,9 @@ side_bar_repo_limit: 5
 author: Peter Fu
 organization: ECNU
 organization_url: ecnu.edu.cn
-github_username: mzlogin
-location: ShangHai, China
-email: fhcxiaos@hotmail.com
+github_username: PeterXiaosa
+location: Shanghai, China
+email: fhcxiaosa@hotmail.com
 
 # ---------------- #
 #    Navigation    #
@@ -95,14 +95,14 @@ disqus:
     username: 
 # https://imsun.net/posts/gitment-introduction/
 gitment:
-    owner: mzlogin
+    owner: PeterXiaosa
     repo: blog-comments
     oauth:
         client_id: d2e1cbbd298958076462
         client_secret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
 # https://github.com/gitalk/gitalk#install
 gitalk:
-    owner: mzlogin
+    owner: PeterXiaosa
     repo: blog-comments
     clientID: d2e1cbbd298958076462
     clientSecret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
