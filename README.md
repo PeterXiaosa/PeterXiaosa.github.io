@@ -1,4 +1,4 @@
-# 码志
+# 码志 (用的大佬模板)
 
 我的个人博客：<https://mazhuang.org>，欢迎 Star 和 Fork。
 
