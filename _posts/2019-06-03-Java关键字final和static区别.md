@@ -44,7 +44,7 @@ keywords: final、static
 
 
 ### final和static总结
- type | static | final
+ type | static | final  
 -|-|-
 Class |静态内部类|无法被继承
 function|不依赖类对象|无法被重写|
