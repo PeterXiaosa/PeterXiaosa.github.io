@@ -5,7 +5,7 @@ baseurl:
 url: https://peterxiaosa.github.io
 date_format: "ordinal"
 title: Blog
-subtitle: "细节决定成败"
+subtitle: "Talk is cheap, Show me the code"
 description: "Peter的个人博客"
 keywords: Blog, Peter Fu, PeterXiaosa, peter
 timezone: Asia/Shanghai
