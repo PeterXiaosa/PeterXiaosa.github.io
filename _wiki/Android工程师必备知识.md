@@ -19,7 +19,7 @@ keywords: Android、Java
 * Init进程，Zygote进程，SystemServer进程及Launcher启动流程。根Activity启动流程，四大组件自动流程。
 * ActivityThread，AMS，WMS的工作原理。
 * IntentService、HandlerThread实现原理。
-* 框架的源码。(Eventbus、OkHttp)
+* 框架的源码。(Eventbus、OkHttp、Glide)
 * 设计模式（单例模式(懒汉，饿汉)，DCL，静态内部类创建）、Builder模式、观察者模式、装饰模式、策略模式、简单工厂模式、抽象工厂模式、代理模式（动态代理）
 * 从输入一个URL到看到一个页面的过程。
 * Android的性能优化有哪些方法
