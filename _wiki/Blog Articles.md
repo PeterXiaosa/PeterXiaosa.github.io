@@ -1,7 +1,7 @@
 ---
 layout: wiki
 title: Blog Articles
-categories: Android, Java
+categories: Android Java
 description: 大神博客的优秀文档，建议多看看。
 keywords: Java， Android
 ---
