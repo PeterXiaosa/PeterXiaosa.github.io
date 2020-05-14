@@ -12,7 +12,7 @@ keywords: Java， Android
 
 ## 合并两个有序数组
 
-<font size=4>**题目描述**</font>
+**题目描述**
 
 给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中*，*使 nums1 成为一个有序数组。
 
@@ -59,7 +59,7 @@ From : LeetCode 图解 | 88. 合并两个有序数组
 
 ## 搜索旋转排序数组
 
-<font size=4>**题目描述**</font>
+**题目描述**
 
 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
 
@@ -131,5 +131,67 @@ From : LeetCode 图解 | 88. 合并两个有序数组
 
 Date : 2020.05.13  
 From : LeetCode | 探索字节跳动. 搜索旋转排序数组  
+
+## 最长连续递增序列
+
+**题目描述**
+
+给定一个未经排序的整数数组，找到最长且连续的的递增序列。
+
+
+**说明：**  
+无
+
+**示例：**
+
+* 示例1  
+输入: [1,3,5,4,7]  
+输出: 3  
+解释: 最长连续递增序列是 [1,3,5], 长度为3。 
+尽管 [1,3,5,7] 也是升序的子序列, 但它不是连续的，因为5和7在原数组里被4隔开。
+
+* 示例2  
+输入: [2,2,2,2,2]  
+输出: 1  
+解释: 最长连续递增序列是 [2], 长度为1。
+
+**分析：**
+* 依次遍历数组，记录最大连续的递增序列长度。当序列不再递增时，将计算长度置0重新计算。然后取最大的计算长度返回即可。
+
+```java
+    public static void main(String[] args) {
+        int[] array = new int[]{1};
+        System.out.println("" + findLengthOfLCIS(array));
+    }
+
+    public static int findLengthOfLCIS(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        if (nums.length < 2) {
+            return nums.length;
+        }
+
+        int max = 0;
+        int start = 1;
+
+        for (int i = 0; i < nums.length -1; i++) {
+            if (nums[i] < nums[i + 1]) {
+                start++;
+                if (i == nums.length - 2) {
+                    max = Math.max(max, start);
+                }
+            } else {
+                max = Math.max(max, start);
+                start = 1;
+            }
+        }
+
+        return max;
+    }
+```
+
+Date : 2020.05.14  
+From : LeetCode | 674.最长连续递增序列 
 
 
