@@ -396,12 +396,50 @@ From : LeetCode | 探索字节跳动.合并两个有序链表
 输出: "2314"
 
 **分析：**
-  
+  通过使用k / (n-1)! 得到除数和mod余数。通过判断除数和mod余数确定当前list中的数值，添加之后remove list中的该值。然后n = n-1; k = mod，继续之前的逻辑。
 
 ```java
 
     public String getPermutation(int n, int k) {
+        StringBuilder builder = new StringBuilder();
+        List<Integer> list = new ArrayList<>();
+        int temp = k;
 
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+
+        for (int i = n; i >= 1; i--) {
+            if (list.size() == 1) {
+                builder.append(list.get(0));
+                break;
+            }
+            int j = i -1;
+            int fatal = 1;
+            while (j > 0) {
+                fatal = fatal * j;
+                j--;
+            }
+            int result = temp / fatal;
+            int mod = temp - result * fatal;
+
+            if (mod == 0) {
+                builder.append(list.get(result -1));
+                list.remove(list.get(result -1));
+                int length = list.size();
+                for (j = length; j>0;j--) {
+                    builder.append(list.get(list.size() -1));
+                    list.remove(list.size() -1);
+                }
+                break;
+            } else {
+                builder.append(list.get(result));
+                list.remove(list.get(result));
+            }
+            temp = mod;
+        }
+
+        return builder.toString();
     }
 ```
 
