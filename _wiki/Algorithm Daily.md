@@ -260,16 +260,16 @@ From : LeetCode | 探索字节跳动.数组中的第K个最大元素
 输出: 4  
 解释: 最长连续序列是 [1, 2, 3, 4]。它的长度为 4。
 
-**分析：**
-* 我们维护一个hashMap，以当前的数值作为key，以该数值所在的最长连续序列的长度作为value，遍历一次数组，假设当前遍历到的数组中的值是n，我们做如下判断：
+**分析：**  
+我们维护一个hashMap，以当前的数值作为key，以该数值所在的最长连续序列的长度作为value，遍历一次数组，假设当前遍历到的数组中的值是n，我们做如下判断：  
 
-如果hashMap的key中存在n，则continue
+如果hashMap的key中存在n，则continue  
 
-如果hashMap的key中存在n-1，则hashMap中n对应的总长度是map.get(n-1)+1
+如果hashMap的key中存在n-1，则hashMap中n对应的总长度是map.get(n-1)+1  
 
-如果hashMap的key中存在n+1, 则hashMap中n对应的总长度是map.get(n+1)+1
+如果hashMap的key中存在n+1, 则hashMap中n对应的总长度是map.get(n+1)+1  
 
-如果hashMap的key中既存在n+1也存在n-1, 则hashMap中n对应的总长度是map.get(n-1)+1+map.get(n+1)
+如果hashMap的key中既存在n+1也存在n-1, 则hashMap中n对应的总长度是map.get(n-1)+1+map.get(n+1)  
 
 这么做最大的好处在于我们不需要像题解那样用while遍历一遍去更改之前或之后的key所对应的总长度，现在我们只需要关心一个连续串的两端，只修改两个端点上的值，因为当前连续串的长度已经记录下来了，所以O(1)时间就能找到这个串的两端。如果用while遍历修改一遍的话在极端情况下时间复杂度会很大，但是用这个方法，除了大家在评论里说的，数据量大的时候哈希表查询耗时不是O(1)之外，其他就都没问题了。（大佬的分析）
 
@@ -340,6 +340,23 @@ From : LeetCode | 探索字节跳动.最长连续序列
          int val;
          ListNode next;
          ListNode(int x) { val = x; }
+    }
+
+    // 递归，需考虑栈的深度是否会溢出
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        } else if (l2 == null) {
+            return l1;
+        }
+
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
     }
 
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
