@@ -465,7 +465,7 @@ From : LeetCode | 探索字节跳动.第k个排列
 
 
 
-##  朋友圈
+##  朋友圈  
 
 **题目描述**
 
@@ -504,11 +504,21 @@ N 在[1,200]的范围内。
 如果有M[i][j] = 1，则有M[j][i] = 1。
 
 **分析：**  
-
+将朋友圈问题转化为使用深度优先搜索，查找无向图连通块的个数。从每个未被访问的节点开始深搜，每开始一次搜索就增加couont计数器一次。count数即为连通块数。
 
 ```java
 
+// (有点难，还是没太懂深度优先搜索算法)
+public void dfs(int[][] M, int[] visited, int i) {
+        for (int j = 0; j < M.length; j++) {
+            if (M[i][j] == 1 && visited[j] == 0) {
+                visited[j] = 1;
+                dfs(M, visited, j);
+            }
+        }
+    }
     public int findCircleNum(int[][] M) {
+<<<<<<< HEAD
         if (M == null) {
             return 0;
         }
@@ -535,8 +545,19 @@ N 在[1,200]的范围内。
         }
 
         return length - list.size();
+=======
+        int[] visited = new int[M.length];
+        int count = 0;
+        for (int i = 0; i < M.length; i++) {
+            if (visited[i] == 0) {
+                dfs(M, visited, i);
+                count++;
+            }
+        }
+        return count;
+>>>>>>> e6628c2053ce989bb10529f6a6f968acf0e4dd3f
     }
 ```
 
 Date : 2020.05.19  
-From : LeetCode | 探索字节跳动.朋友圈
+From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/)
