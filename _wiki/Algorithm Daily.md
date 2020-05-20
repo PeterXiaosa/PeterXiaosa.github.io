@@ -518,7 +518,6 @@ public void dfs(int[][] M, int[] visited, int i) {
         }
     }
     public int findCircleNum(int[][] M) {
-<<<<<<< HEAD
         if (M == null) {
             return 0;
         }
@@ -545,19 +544,67 @@ public void dfs(int[][] M, int[] visited, int i) {
         }
 
         return length - list.size();
-=======
-        int[] visited = new int[M.length];
-        int count = 0;
-        for (int i = 0; i < M.length; i++) {
-            if (visited[i] == 0) {
-                dfs(M, visited, i);
-                count++;
-            }
-        }
-        return count;
->>>>>>> e6628c2053ce989bb10529f6a6f968acf0e4dd3f
     }
 ```
 
 Date : 2020.05.19  
 From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/)
+
+
+##  合并区间   
+
+**题目描述**
+
+班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
+
+给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。
+
+
+**说明：**  
+* 给定 n 的范围是 [1, 9]。
+* 给定 k 的范围是[1,  n!]。
+
+**示例：**
+
+* 示例1  
+输入: [[1,3],[2,6],[8,10],[15,18]]  
+输出: [[1,6],[8,10],[15,18]]  
+解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].  
+
+* 示例2  
+输入: [[1,4],[4,5]]  
+输出: [[1,5]]  
+解释: 区间 [1,4] 和 [4,5] 可被视为重叠区间。  
+
+**分析：**  
+
+
+```java
+
+    public int[][] merge(int[][] intervals) {
+        // 先按照区间起始位置排序
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+        // 遍历区间
+        int[][] res = new int[intervals.length][2];
+        int idx = -1;
+        for (int[] interval: intervals) {
+            // 如果结果数组是空的，或者当前区间的起始位置 > 结果数组中最后区间的终止位置，
+            // 则不合并，直接将当前区间加入结果数组。
+            if (idx == -1 || interval[0] > res[idx][1]) {
+                res[++idx] = interval;
+            } else {
+                // 反之将当前区间合并至结果数组的最后区间
+                res[idx][1] = Math.max(res[idx][1], interval[1]);
+            }
+        }
+        return Arrays.copyOf(res, idx + 1);
+    }
+```
+
+Date : 2020.05.20  
+From : LeetCode | 探索字节跳动.[合并区间](https://leetcode-cn.com/explore/interview/card/bytedance/243/array-and-sorting/1046/)
