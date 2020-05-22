@@ -548,24 +548,19 @@ public void dfs(int[][] M, int[] visited, int i) {
 ```
 
 Date : 2020.05.19  
-From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/)
+From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/)  
 
 
 ##  合并区间   
 
-**题目描述**
-
-班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
-
-给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。
-
+**题目描述**  
+给出一个区间的集合，请合并所有重叠的区间。
 
 **说明：**  
 * 给定 n 的范围是 [1, 9]。
 * 给定 k 的范围是[1,  n!]。
 
 **示例：**
-
 * 示例1  
 输入: [[1,3],[2,6],[8,10],[15,18]]  
 输出: [[1,6],[8,10],[15,18]]  
@@ -579,9 +574,8 @@ From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problem
 **分析：**  
 
 
-```java
-
-    public int[][] merge(int[][] intervals) {
+``` java
+public int[][] merge(int[][] intervals) {
         // 先按照区间起始位置排序
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
@@ -608,3 +602,88 @@ From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problem
 
 Date : 2020.05.20  
 From : LeetCode | 探索字节跳动.[合并区间](https://leetcode-cn.com/explore/interview/card/bytedance/243/array-and-sorting/1046/)
+
+
+##  反转链表  
+
+**题目描述**
+
+反转一个单链表。
+
+
+**说明：**  
+* 进阶:  
+你可以迭代或递归地反转链表。
+
+
+**示例：**
+
+* 示例1  
+输入: 1->2->3->4->5->NULL  
+输出: 5->4->3->2->1->NULL  
+
+**分析：**  
+其实在做这道题目之前，应该先知道如何生成一个链表。链表生成有两种方法，头插法和尾插法。（此时应该想到Hashmap的扩容，在JDK1.7中采用头插法，多线程下会产生死锁。JDK1.8中采用尾插法，多线程下会覆盖旧数据）
+
+```java
+    public void addition_isCorrect() {
+        ListNode node = new ListNode(1);
+        node = addNode(node, 2);
+        node = addNode(node, 3);
+        node = addNode(node, 4);
+        node = addNode(node, 5);
+
+        ListNode result = reverseList(node);
+        while (result != null) {
+            System.out.println(result.val);
+            result = result.next;
+        }
+    }
+
+    /**
+     *   尾插法
+     * @param node
+     * @param value
+     * @return
+     */
+  public ListNode addNode(ListNode node, int value) {
+      ListNode head, tail, newNode;
+      if (node == null) {
+            node = new ListNode(value);
+            head = node;
+        } else {
+            head = tail = node;
+            while (tail.next != null) {
+                tail = tail.next;
+            }
+            newNode = new ListNode(value);
+            newNode.next = null;
+            tail.next = newNode;
+        }
+
+        return head;
+  }
+
+    public ListNode reverseList(ListNode head) {
+              ListNode head, tail;
+      head = tail = new ListNode(-1);
+        Stack<Integer> stack = new Stack<>();
+        while (node != null) {
+            int value = node.val;
+            stack.push(value);
+            node = node.next;
+        }
+
+        while (!stack.isEmpty()) {
+            while (tail.next != null) {
+                tail = tail.next;
+            }
+            tail.next = new ListNode(stack.pop());
+        }
+
+        return head.next;
+    }
+```
+
+Date : 2020.05.21  
+From : LeetCode | 探索字节跳动.[反转链表](https://leetcode-cn.com/explore/interview/card/bytedance/244/linked-list-and-tree/1038/)
