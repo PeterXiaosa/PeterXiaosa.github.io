@@ -553,8 +553,8 @@ From : LeetCode | 探索字节跳动.[朋友圈](https://leetcode-cn.com/problem
 
 ##  合并区间   
 
-**题目描述**  
-给出一个区间的集合，请合并所有重叠的区间。
+**题目描述**
+
 
 **说明：**  
 * 给定 n 的范围是 [1, 9]。
@@ -687,3 +687,52 @@ From : LeetCode | 探索字节跳动.[合并区间](https://leetcode-cn.com/expl
 
 Date : 2020.05.21  
 From : LeetCode | 探索字节跳动.[反转链表](https://leetcode-cn.com/explore/interview/card/bytedance/244/linked-list-and-tree/1038/)
+
+
+
+##  数组中重复的数字 
+
+**题目描述**
+
+在一个长度为n的数组里的所有数字都在0~n-1的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是重复的数字2或者3。
+
+
+<!-- **说明：**  
+* 进阶:  
+你可以迭代或递归地反转链表。 -->
+
+
+**示例：**
+
+* 示例1  
+输入: {2,3,1,0,2,5,3}  
+输出: true
+
+**分析：**  
+首先，第一反应是可以将数组排序，排序之后依次对比数组中元素是否相等即可得出，时间复杂度为nlog(n)。其次，可以使用哈希表key-value，来存储数组中的元素，如果哈希表中没有数组值，那么就将数组元素添加进去。如果包含，那么也可知有重复元素。时间复杂度为n，但是多用了一个哈希表的空间。在不产生额外空间的情况下并且保持时间复杂度为n,可将数组中元素逐个扫描，从第0个开始。第0个元素是否等于i,如果相等扫码下一个元素。如果不等，将i和array[i]交换。再次进行比较array[i]是否和第array[i]个元素相等，如果相等返回true，如果不等继续。直到遍历完最后没有找到相等的元素即返回false。
+
+```java
+    public boolean duplicate(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int value = array[i];
+            if (value == i) {
+                continue;
+            }
+
+            while (value != i) {
+                if (value == array[value]) {
+                    return true;
+                } else {
+                    int temp = array[value];
+                    array[value] = value;
+                    value = array[i] = temp;
+                }
+            }
+
+        }
+        return false;
+    }
+```
+
+Date : 2020.05.25  
+From : LeetCode | 《剑指offer》 面试题3：数组中重复的数字
