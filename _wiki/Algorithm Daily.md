@@ -736,3 +736,71 @@ From : LeetCode | 探索字节跳动.[反转链表](https://leetcode-cn.com/expl
 
 Date : 2020.05.25  
 From : LeetCode | 《剑指offer》 面试题3：数组中重复的数字
+
+
+##  重建二叉树 
+
+**题目描述**
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如，输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6},则重建二叉树并输入它的头结点。
+
+
+<!-- **说明：**  
+* 进阶:  
+你可以迭代或递归地反转链表。 -->
+
+
+<!-- **示例：**
+
+* 示例1  
+输入: {2,3,1,0,2,5,3}  
+输出: true -->
+
+**分析：**  
+前序遍历序列的第一个数字必为二叉树的根节点。然后在中序遍历序列中遍历找到根节点的位置index。中序遍历序列中在index左侧是根节点左子树的值(根节点左子数的中序遍历序列)，index右边是根节点右子树的值(右子树的中序遍历序列)。而前序遍历序列的1-index为则为根节点左子树的值（根节点左子树的前序遍历序列），inde+1-end位为根节点右子树的值（根节点右子树的前序遍历序列）。这样我们又分别知道了根节点的左右字数的前序遍历序列和中序遍历序列，使用递归即可得出该二叉树。
+
+```java
+    class BinaryTree {
+        int value;
+        BinaryTree leftTree;
+        BinaryTree rightTree;
+    }
+
+    BinaryTree getBinaryTree(int[] front, int[] middle) {
+        BinaryTree binaryTree = null;
+        if (front.length == 0 || middle.length == 0)
+            return binaryTree;
+        binaryTree = new BinaryTree();
+
+        int root = front[0];
+        binaryTree.value = root;
+        int index = getIndex(middle, root);
+
+        if (index == 0) {
+            // 无左节点
+            binaryTree.leftTree = null;
+            binaryTree.rightTree = getBinaryTree(Arrays.copyOfRange(front, 1, front.length), Arrays.copyOfRange(middle, 1, middle.length));
+        } else if (index == middle.length - 1){
+            // 无右节点
+            binaryTree.rightTree = null;
+            binaryTree.leftTree = getBinaryTree(Arrays.copyOfRange(front, 1, front.length), Arrays.copyOfRange(middle, 0, middle.length -1));
+        } else {
+            binaryTree.leftTree = getBinaryTree(Arrays.copyOfRange(front, 1, index + 1), Arrays.copyOfRange(middle, 0, index));
+            binaryTree.rightTree = getBinaryTree(Arrays.copyOfRange(front, index + 1, front.length), Arrays.copyOfRange(middle, index + 1, middle.length));
+        }
+
+        return binaryTree;
+    }
+
+    int getIndex(int[] array, int n) {
+        for (int i =0; i < array.length;i++) {
+            if (n == array[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+```
+
+Date : 2020.05.28  
+From : LeetCode | 《剑指offer》 面试题7：重建二叉树
