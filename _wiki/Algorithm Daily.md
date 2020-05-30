@@ -844,9 +844,116 @@ From : LeetCode | 《剑指offer》 面试题7：重建二叉树
     }
 ```
 
-Date : 2020.05.2  
+Date : 2020.05.29  
 From : LeetCode | 189.旋转数组
 
+##  二叉树的层序遍历 
+
+**题目描述**  
+
+给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。  
+
+
+<!-- **说明：**  
+* 进阶:  
+你可以迭代或递归地反转链表。 -->
+
+
+ **示例：**
+
+* 示例1  
+二叉树：[3,9,20,null,null,15,7],  
+
+    3  
+   / \  
+  9  20  
+    /  \  
+   15   7  
+返回其层次遍历结果：  
+
+[  
+  [3],  
+  [9,20],  
+  [15,7]  
+]
+ 
+
+**分析：**  
+二叉树的层序遍历，使用队列。先将根节点加入队列，然后依次输出队列中的结点。将节点的值加入list,同时将每个节点的左右子节点加入队列，直到队列中无值，输出list，即可得二叉树层序遍历结果。
+
+```java
+
+    public class TreeNode {
+        int val = 0;
+        TreeNode left = null;
+        TreeNode right = null;
+        public TreeNode(int val) {
+            this.val = val;
+        }
+    }
+
+    /**
+    不需考虑层数，只需要依次输出二叉树层序遍历结果
+    **/
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> resultList = new ArrayList();
+        if(root == null) {
+            return resultList;
+        }
+        Queue<TreeNode> queue = new LinkedList();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if(node == null) {
+                continue;
+            }
+            resultList.add(node.val);
+            if(node.left != null) {
+                queue.offer(node.left);
+            }
+            if(node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        return resultList;
+    }
+
+    /**
+    需要将二叉树层序遍历，根据层数输出来，思路和上述方法相似，只是需要每次在每层时遍历将该层所有节点的值加入到这一层的List中。
+    **/
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> resultList = new ArrayList();
+        if(root == null) {
+            return resultList;
+        }
+
+        Queue<TreeNode> queue = new LinkedList();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList();
+            for(int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if(node == null) {
+                    continue;
+                }
+                list.add(node.val);
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
+                if(node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            resultList.add(list);
+        }
+        return resultList;
+    }
+```
+
+Date : 2020.05.30  
+From : LeetCode | 102.二叉树的层序遍历
 
 ##  二叉树的右视图 
 
@@ -883,5 +990,5 @@ From : LeetCode | 189.旋转数组
     }
 ```
 
-Date : 2020.05.2  
+Date : 2020.05.30  
 From : LeetCode | 199.二叉树的右视图
