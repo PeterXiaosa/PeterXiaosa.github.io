@@ -840,7 +840,26 @@ From : LeetCode | 《剑指offer》 面试题7：重建二叉树
 
 ```java
     public void rotate(int[] nums, int k) {
+        k = k % nums.length;
+        reverse(nums, 0, nums.length -1);
+        reverse(nums, 0 , k -1);
+        reverse(nums, k, nums.lengtn -1);
+    }
 
+    private void reverse(int[] nums, int start, int stop){
+        if(nums == null || start > stop) {
+            return;
+        }
+        int first = start;
+        int end = stop;
+
+        while(first <= end) {
+            int temp = nums[first];
+            nums[first] = nums[end];
+            nums[end] = temp;
+            first++;
+            end--;
+        }
     }
 ```
 
@@ -982,12 +1001,30 @@ From : LeetCode | 102.二叉树的层序遍历
  
 
 **分析：**  
-
+右视图，也及根右左的遍历，和前序根左右相反，所以可采用深度优先搜索。  
+另外一种方法，可广度搜索，例如二叉树层序遍历，然后每层输出最后一个数字。
 
 ```java
-    public List<Integer> rightSideView(TreeNode root) {
+class Solution {
+    List<Integer> res = new ArrayList();
 
+    public List<Integer> rightSideView(TreeNode root) {
+        dfs(root, 0);
+        return res;
     }
+
+    private void dfs(TreeNode node, int depth) {
+        if(node == null) {
+            return;
+        }
+        if(res.size == depth) {
+            res.add(node.val);
+        }
+        depth++;
+        dfs(node, depth);
+        dfs(node, depth);
+    }
+}
 ```
 
 Date : 2020.05.30  
