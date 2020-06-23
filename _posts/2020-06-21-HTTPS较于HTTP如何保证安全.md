@@ -15,7 +15,7 @@ HTTP协议是Hyper Text Transfer Protocol(超文本传输协议)的缩写，基�
 
 HTTP采用明文传输，信息在网络中传输没有做任何加密，很容易被劫持。如图：  
 
-![HTTP明文传输过程](http://xiaosalovejie.top/images/hashmap_resize_old.png)  
+![HTTP明文传输过程](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWR83z99XTq2M101DEy36Lrcxl.OlvJ4UwhZmFwyiufRDAYwCGKelQcUtIJrfETXj.Q!!/b&bo=TgM1Ak4DNQIDByI!&rf=viewer_4)  
 那我们这里就出现了一个问题，如何保证信息传输的安全性呢？
 
 ### Q1：HTTP信息传输，如何保证其安全性？
