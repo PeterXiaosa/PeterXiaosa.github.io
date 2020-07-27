@@ -1075,3 +1075,88 @@ From : LeetCode | 199.二叉树的右视图
 
 Date : 2020.06.11  
 From : LeetCode | 739.每日温度
+
+
+## 移掉K位数字 
+
+**题目描述**  
+
+给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小。 
+
+
+ **示例：**
+* 示例1  
+输入: num = "1432219", k = 3  
+输出: "1219"  
+解释: 移除掉三个数字 4, 3, 和 2 形成一个新的最小的数字 1219。  
+
+* 示例2  
+输入: num = "10200", k = 1  
+输出: "200"  
+解释: 移掉首位的 1 剩下的数字为 200. 注意输出不能有任何前导零。  
+
+* 示例3  
+输入: num = "10", k = 2  
+输出: "0"  
+解释: 从原数字移除所有的数字，剩余为空就是0。  
+ 
+
+**分析：**  
+使得数字最小应该从左往右依次遍历，如果第i位数字与左侧数字i-1,i-2位... 顺序依次比较，并且没有移除完，那么就应该移除第i-1位数字，如果第i-2位数字依旧小于第i位并且没有移除完，那么就应该继续移除第i-2位，直到第i位左侧数字大于第i位。如果数字是顺序递增的，那么可能遍历完也不会移除完。那么这个时候就应该从数字的末尾开始递减遍历移除数字。移除完之后在输出结果之前需要对数字进行除0操作。  
+
+因为采用后入先出的模式，即可以使用栈。首先对输入判断是否有效，为Null或为空字符串则直接输出。如果输入有效，则默认添加第0位到栈中。然后从第1位开始遍历到数字最后，如果栈为非空则判断该位数字是否小于栈顶元素，如果小于则弹出栈顶元素，并且k减1，并判断是否移除完，如果没有移除完则继续如此判断。在遍历完之后，判断是否移除完，即k是否为0.如果k不为0，那么这个时候就应该从数字末尾开始依次移除。及将栈从栈底开始移除，由于使用的是 LinkedList， 即可做到栈和队列依次切换使用。完成移除之后，在输出结果之前，最后一步操作就该进行除0操作，即数字首位不能为0，最后输出结果。  
+
+因为依次遍历数字，所以时间复杂度为O(n), 使用栈来存储数字，空间复杂度也为O(n)。
+
+```java
+public String removeKdigits(String num, int k) {
+        if (num == null || num.isEmpty()) {
+            return num;
+        }
+
+        LinkedList<Integer> stack = new LinkedList<>();
+
+        char[] array = num.toCharArray();
+        int length = array.length;
+
+        stack.push(array[0] - '0');
+        for (int i =1; i < length; i++) {
+            int value = array[i] - '0';
+
+            while (!stack.isEmpty() && k>0 && value < stack.peek()) {
+                stack.pop();
+                k--;
+            }
+
+            stack.push(value);
+        }
+
+        while(k>0 && !stack.isEmpty()) {
+            stack.pop();
+            k--;
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        boolean isFirstZero = true;
+        while (!stack.isEmpty()) {
+            Integer temp = stack.removeLast();
+            if (isFirstZero && temp == 0) {
+                continue;
+            }
+            isFirstZero = false;
+            builder.append(temp);
+        }
+        if (builder.length() == 0) {
+            return "0";
+        } else {
+            return builder.toString();
+        }
+    }
+```
+
+时间复杂度：O(n)  
+空间复杂度：O(n)
+
+Date : 2020.07.27  
+From : LeetCode | 402.移掉K位数字
