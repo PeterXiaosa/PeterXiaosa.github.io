@@ -40,5 +40,5 @@ keywords: Android、Java
 * 类的加载机制，Java三种类加载器。及和Android类加载器相比较。
 * JVM内存区域，垃圾回收机制(标记计数算法，可达性分析算法)。GC算法（标记-清除算法，复制算法，标记-整理算法）及各运用场景和为什么。Java中的四种引用。
 * Synchronized和Volatile区别。
-* ArrayList和LinkedList区别及源码层板分析下的实现原理。
+* [ArrayList](https://peterxiaosa.github.io/2020/07/31/ArrayList%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/)和LinkedList区别及源码层板分析下的实现原理。
 * [线程池底层实现原理](https://peterxiaosa.github.io/2019/11/03/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/)
