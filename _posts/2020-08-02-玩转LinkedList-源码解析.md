@@ -6,7 +6,7 @@ description: 对LinkedList的源码分析和使用介绍，从继承，接口，
 keywords: LinkedList, Deque, Queue, Java, Stack
 ---
 
-上一节我们介绍了 Java 中常见的线性集合 Arraylist， 这一节我们再来介绍一下 Java 中另外一种使用频繁的数据结构 Linkedlist。它和 ArrayList 不同，ArrayList 采用的是内部数组，而它内部采用的却是双向链表。接下来，我们就从源码的角度来认识了解一下它吧。  
+上一节我们介绍了 Java 中常见的线性集合 Arraylist， 这一节我们再来介绍一下 Java 中另外一种使用频繁的数据结构 Linkedlist。它和 ArrayList 不同，ArrayList 采用的是内部数组，而它内部采用的却是双向链表。接下来，我们就从源码的角度来认识了解一下它吧。
 
 # Linkedlist
 
