@@ -12,7 +12,7 @@ keywords: Android、Java
 ## Android
 
 * TCP和UDP
-* CrashHandler的实现
+* [CrashHandler的实现](https://peterxiaosa.github.io/2020/08/31/%E5%85%B3%E4%BA%8ECrashHandler%E4%B8%8EBugly%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/)
 * [Android各版本的变化](https://peterxiaosa.github.io/2019/09/16/Android%E7%89%88%E6%9C%AC%E7%89%B9%E6%80%A7/)
 * Binder的理解及原理。
 * [Android消息机制](https://peterxiaosa.github.io/2019/05/29/Android%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6/)(Looper，MessageQueue，Handler工作原理，如何手写looper，即阻塞消息队列实现)
@@ -40,5 +40,5 @@ keywords: Android、Java
 * 类的加载机制，Java三种类加载器。及和Android类加载器相比较。
 * JVM内存区域，垃圾回收机制(标记计数算法，可达性分析算法)。GC算法（标记-清除算法，复制算法，标记-整理算法）及各运用场景和为什么。Java中的四种引用。
 * Synchronized和Volatile区别。
-* [ArrayList](https://peterxiaosa.github.io/2020/07/31/ArrayList%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/)和LinkedList区别及源码层板分析下的实现原理。
+* [ArrayList](https://peterxiaosa.github.io/2020/07/31/ArrayList%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/)和[LinkedList](https://peterxiaosa.github.io/2020/08/02/%E7%8E%A9%E8%BD%ACLinkedList-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/)区别及源码层板分析下的实现原理。
 * [线程池底层实现原理](https://peterxiaosa.github.io/2019/11/03/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/)
