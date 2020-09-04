@@ -1207,3 +1207,149 @@ From : LeetCode | 402.移掉K位数字
 
 Date : 2020.08.31  
 From : LeetCode | 503.下一个更大元素
+
+
+## 函数的独占时间 
+
+**题目描述**  
+
+给出一个非抢占单线程CPU的 n 个函数运行日志，找到函数的独占时间。  
+
+每个函数都有一个唯一的 Id，从 0 到 n-1，函数可能会递归调用或者被其他函数调用。  
+
+日志是具有以下格式的字符串：function_id：start_or_end：timestamp。例如："0:start:0" 表示函数 0 从 0 时刻开始运行。"0:end:0" 表示函数 0 在 0 时刻结束。  
+
+函数的独占时间定义是在该方法中花费的时间，调用其他函数花费的时间不算该函数的独占时间。你需要根据函数的 Id 有序地返回每个函数的独占时间。  
+
+
+ **示例：**
+* 示例1  
+输入:
+n = 2  
+logs =   
+["0:start:0",  
+ "1:start:2",  
+ "1:end:5",  
+ "0:end:6"]  
+输出:[3, 4]  
+说明：  
+函数 0 在时刻 0 开始，在执行了  2个时间单位结束于时刻 1。  
+现在函数 0 调用函数 1，函数 1 在时刻 2 开始，执行 4 个时间单位后结束于时刻 5。  
+函数 0 再次在时刻 6 开始执行，并在时刻 6 结束运行，从而执行了 1 个时间单位。  
+所以函数 0 总共的执行了 2 +1 =3 个时间单位，函数 1 总共执行了 4 个时间单位。  
+
+**分析：**  
+每个时间都只执行一个函数，并且函数开始之后，要么该函数内部继续开始另一个函数（或者递归再次执行本身），要么就结束本身，在结束本身之前不可能先结束其他函数。所以可以考虑到使用栈来计算，当函数运行的时候(即 start 的时候，将方法入栈)，当函数结束的时候(即 end 的时候，将方法出栈)。两者时间差即为函数运行时间。有一点很关键，当函数弹出栈的时候，如果栈非空说明还有函数没有执行完，那么这个函数要减去刚刚出栈函数的运行时间，因为刚刚出栈函数的时间并不在栈顶函数运行的时间内。
+
+```java
+    class Task {
+        int threadId = 0;
+        int time = 0;
+        boolean isStart;
+
+        Task(String methodStr) {
+            String[] strings = methodStr.split(":");
+            this.threadId = Integer.parseInt(strings[0]);
+            this.isStart = "start".equals(strings[1]);
+            this.time = Integer.parseInt(strings[2]);
+        }
+    }
+
+    public int[] exclusiveTime(int n, List<String> logs) {
+        LinkedList<Task> stack = new LinkedList<>();
+
+        int[] res = new int[n];
+        for (int i =0; i < logs.size(); i++) {
+            String methodStr = logs.get(i);
+            Task task = new Task(methodStr);
+
+            if (task.isStart) {
+                stack.push(task);
+            } else {
+                Task oldTask = stack.pop();
+                int realTime = task.time - oldTask.time + 1;
+                res[task.threadId] += realTime;
+                if (!stack.isEmpty()) {
+                    // 这里要理解，出栈函数的运行时间不在栈顶函数运行时间内，所以要减。
+                    // 这里会先减成负数，当栈顶函数出栈的时候计算时间会将这个负数弥补回来的。
+                    res[stack.peek().threadId] -= realTime;
+                }
+            }
+        }
+
+        return res;
+    }
+```
+
+时间复杂度：O(n)  
+空间复杂度：O(n)
+
+Date : 2020.09.02  
+From : LeetCode | 636.函数的独占时间
+
+## 棒球比赛
+
+**题目描述**  
+
+你现在是棒球比赛记录员。  
+给定一个字符串列表，每个字符串可以是以下四种类型之一：  
+1.整数（一轮的得分）：直接表示您在本轮中获得的积分数。  
+2. "+"（一轮的得分）：表示本轮获得的得分是前两轮有效 回合得分的总和。  
+3. "D"（一轮的得分）：表示本轮获得的得分是前一轮有效 回合得分的两倍。  
+4. "C"（一个操作，这不是一个回合的分数）：表示您获得的最后一个有效 回合的分数是无效的，应该被移除。  
+
+每一轮的操作都是永久性的，可能会对前一轮和后一轮产生影响。  
+你需要返回你在所有回合中得分的总和。  
+
+
+ **示例：**
+* 示例1  
+输入: ["5","-2","4","C","D","9","+","+"]  
+输出: 27  
+解释:   
+第1轮：你可以得到5分。总和是：5。  
+第2轮：你可以得到-2分。总数是：3。  
+第3轮：你可以得到4分。总和是：7。  
+操作1：第3轮的数据无效。总数是：3。  
+第4轮：你可以得到-4分（第三轮的数据已被删除）。总和是：-1。  
+第5轮：你可以得到9分。总数是：8。  
+第6轮：你可以得到-4 + 9 = 5分。总数是13。  
+第7轮：你可以得到9 + 5 = 14分。总数是27。  
+
+**分析：**  
+好不容易碰到一道我觉得容易的题目了... 这道题可以使用栈。栈存储的是每一轮的得分，而最后的总分只需要在每一轮得分的时候相加就能得到了。当遍历的数据为整数时，说明这一轮的直接得分为该整数，所以将整数入栈。并且结果加上这个整数。当遍历的数据为"C"时，说明上一轮数据无效，上一轮数据即为栈顶数据，所以弹出栈顶，又因为上一轮得分无效了，所以总分要减去它。当遍历的数据为"D"时，该轮得分为上一轮两倍，所以该轮得分为栈顶数据 * 2.同时将该得分入栈，总分加上它。当遍历的数据为"+"时，意味着该轮得分为上两轮得分，即栈顶数据和栈顶下一个数据。所以需要先暂时弹出栈顶数据，这个时候就可以计算出该轮得分为弹出的栈顶数据加上弹出后栈顶的数据。计算完后需要恢复栈，所以将上一轮得分再入栈，接着本轮得分入栈。然后本轮得分加到总分中。这样，遍历完成后，总分即为结果。
+
+```java
+    public int calPoints(String[] ops) {
+        LinkedList<Integer> stack = new LinkedList<>();
+        int res = 0;
+        for (int i = 0; i < ops.length; i++) {
+            String temp = ops[i];
+            if ("+".equals(temp)) {
+                Integer top =stack.pop();
+                int score = top + stack.peek();
+                stack.push(top);
+                stack.push(score);
+                res += score;
+            } else if ("D".equals(temp)) {
+                int value = stack.peek() * 2;
+                stack.push(value);
+                res += value;
+            } else if ("C".equals(temp)) {
+                int value = stack.pop();
+                res -= value;
+            } else {
+                // 整数
+                stack.push(Integer.parseInt(temp));
+                res += stack.peek();
+            }
+        }
+        return res;
+    }
+```
+
+时间复杂度：O(n)  
+空间复杂度：O(n)
+
+Date : 2020.09.02  
+From : LeetCode | 682.棒球比赛
