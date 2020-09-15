@@ -1353,3 +1353,59 @@ From : LeetCode | 636.函数的独占时间
 
 Date : 2020.09.02  
 From : LeetCode | 682.棒球比赛
+
+
+## 旋转链表
+
+**题目描述**  
+
+给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。  
+
+
+ **示例：**
+* 示例1  
+输入: 1->2->3->4->5->NULL, k = 2  
+输出: 4->5->1->2->3->NULL  
+解释:  
+向右旋转 1 步: 5->1->2->3->4->NULL  
+向右旋转 2 步: 4->5->1->2->3->NULL  
+
+**分析：**  
+这道题其实很简单，刚开始一直没想到，然后看官方解释就一下清除了。旋转链表将节点右移k位。由于k可以小于链表长度，也可以大于链表长度。当大于链表长度时，节点一个个右移当移到链表尾部的时候就又会重新从头开始移动。所以可以将链表成环，然后在环形链表中移动节点。  
+
+所以可以首先遍历一次链表，得到链表长度，同时遍历到链表尾部时将尾部指向头部，让链表成环。 然后需要做的是得到新节点头。移动k位，可以让 `k` 对 链表长度 `length` 求余。然后从头部开始第 `length-k`个节点就是新节点，同时还有需要做的是在第 `length-1-k`处的节点的 `next`赋值为null，将链表环断开。
+
+```java
+    public int calPoints(String[] ops) {
+        LinkedList<Integer> stack = new LinkedList<>();
+        int res = 0;
+        for (int i = 0; i < ops.length; i++) {
+            String temp = ops[i];
+            if ("+".equals(temp)) {
+                Integer top =stack.pop();
+                int score = top + stack.peek();
+                stack.push(top);
+                stack.push(score);
+                res += score;
+            } else if ("D".equals(temp)) {
+                int value = stack.peek() * 2;
+                stack.push(value);
+                res += value;
+            } else if ("C".equals(temp)) {
+                int value = stack.pop();
+                res -= value;
+            } else {
+                // 整数
+                stack.push(Integer.parseInt(temp));
+                res += stack.peek();
+            }
+        }
+        return res;
+    }
+```
+
+时间复杂度：O(n)  
+空间复杂度：O(n)
+
+Date : 2020.09.02  
+From : LeetCode | 61.旋转链表
