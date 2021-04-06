@@ -13,19 +13,19 @@ keywords: Http、Https、对称加密、非对称加密
 ### HTTP
 HTTP协议是Hyper Text Transfer Protocol(超文本传输协议)的缩写，基于TCP/IP通信协议运行在应用层的协议。默认端口为80。其中，HTTP协议采取明文传输。 如图：  
 
-![HTTP的正常明文传输](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWd9VfVEOtzmZAWn*JPB3HLP9bkeECw0JL9lJ*tEaDs1FzOTiyeYD37qAVCMbiSPqrQ!!/b&bo=bgM1AQAAAAADB3s!&rf=viewer_4)  
+![HTTP的正常明文传输](http://xiaosalovejie.top/images/HTTP%E6%98%8E%E6%96%87%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png)  
 
 
 HTTP采用明文传输，客户端小明与服务端小红之间的信息传输没有做任何加密，很容易被中间人劫持。如图：  
 
-![被劫持过的HTTP传输](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWTSuf*OejbMkVLY9UKrttsPfiH22FieWQ0aZiJ0oXNNFyP5SmcAigoXcuVG13WJGuw!!/b&bo=IQMuAgAAAAADByw!&rf=viewer_4)   
+![被劫持过的HTTP传输](http://xiaosalovejie.top/images/%E8%A2%AB%E5%8A%AB%E6%8C%81%E8%BF%87%E7%9A%84HTTP%E4%BC%A0%E8%BE%93.png)   
 
 中间人小刚截取到了客户端小刚给服务端小红发送的消息并且进行了篡改导致服务端小红接收到了错误的信息产生误会。那我们这里就出现了一个问题，如何保证客户端小明和服务端小红之间信息传输的安全性呢？
 
 ### Q1：HTTP信息传输，如何保证其安全性？
 我们可以想到加密，在客户端Client进行加密，在Server端进行解密，这样就能保持信息的安全。对通信内容加解密我们采用对称加密来完成，即客户端Client生成一个用于对称加密的秘钥Key，然后使用这个Key对通信内容进行加密，服务端Server再使用这个客户端生成的秘钥Key对加密内容进行解密，得到通信明文内容。如果中间人对我们通信的内容进行劫持，那么他拿到的是加密之后的内容，他没有对称秘钥Key，所以即使劫持了传输内容也无法解密出来。如图：  
 
-![AES对称加密之后的传输过程](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWb3hZXNBTE4sQEMtkZGTrQsViTG1aE0smp5t5Zw3C.OetKVjLo6nn*XXBiNC7o8YzA!!/b&bo=OQMTAjkDEwIDByI!&rf=viewer_4)  
+![AES对称加密之后的传输过程](http://xiaosalovejie.top/images/AES%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B9%8B%E5%90%8E%E7%9A%84%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png)  
 
 可是现在我们又会出现一个问题，我们该如何保证客户端生成的秘钥Key能顺利的发送给服务端并且不被中间人知晓并篡改呢？因为如果第一次传输秘钥Key采用明文，秘钥Key被中间人截获，中间人就可以对传输内容进行加解密进行篡改，那我们之后使用该秘钥Key做的一切内容加解密都白搭。所以现在问题就转化为了客户端如何将秘钥安全的传输告知给服务端。  
 
@@ -36,7 +36,7 @@ HTTP采用明文传输，客户端小明与服务端小红之间的信息传输�
 
 由上可知，我们可以在服务器端生成一对非对称加密秘钥（Public Key和Private Key）。然后，客户端生成对称加密的秘钥Key，客户端使用服务器生成的公钥Public Key对秘钥key进行加密，由于只有服务器端才拥有私钥。所以即便中间人截获了客户端发给服务器端的内容也无法解密出秘钥key,从而保证了秘钥Key的传输安全。过程如图：  
 
-![对称秘钥Key的安全传输过程](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWTG3iMlSDixWrtG4lKyGCK3Ap81bwvJsE08PknfJRuA8dg1siNFtKDfgbZ9yL.uE2w!!/b&bo=vAScArwEnAIDByI!&rf=viewer_4)  
+![对称秘钥Key的安全传输过程](http://xiaosalovejie.top/images/%E5%AF%B9%E7%A7%B0%E7%A7%98%E9%92%A5Key%E7%9A%84%E5%AE%89%E5%85%A8%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png)  
 
 看到这里，我们可能会有2个疑问。  
 * Q1：既然非对称加密能确保安全，那为什么我们还需要对称加密，为什么不都使用非对称加密来进行通信呢？  
@@ -45,7 +45,7 @@ HTTP采用明文传输，客户端小明与服务端小红之间的信息传输�
 
 * Q2：图中的传输过程看起来确实可以确保中间人无法解密出秘钥Key，可是在过程2中也即服务器端传输公钥Public Key给客户端中，如果中间人截取到了公钥Public Key，并且使用自己的公钥Public Key2发送给客户端呢？由于客户端无法确定接收到的Public Key的真实性(也即是否是服务器端的Public Key)，这个时候如果采用中间人的公钥Public Key2对秘钥Key进行加密发送过去，中间人就可以使用他的私钥Private Key2来解密得到客户端的秘钥Key，同时中间人再伪装成客户端，使用从服务端截获的公钥Public Key对Key进行加密发送给服务端。此时由于中间人知道客户端与服务端通信加密的秘钥Key，就可以在通信的过程中进行数据的篡改。整个过程可能有点绕，我们还是通过图来理解： 
 
-![非对称秘钥首次传输被截获过程](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWXikiUKTamIFByAxxqVv94u3P.WoIu7yYhwh7uKxyBV6cdTKarHK5639gdLedh6UuA!!/b&bo=bwQEAwAAAAADB04!&rf=viewer_4)  
+![非对称秘钥首次传输被截获过程](http://xiaosalovejie.top/images/%E5%AF%B9%E7%A7%B0%E7%A7%98%E9%92%A5Key%E7%9A%84%E5%AE%89%E5%85%A8%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png)  
 
 所以非对称加密的问题是，服务器无法确保传输公钥给客户端的过程中不被中间人截取篡改。也即问题的本质是，无法保证网络间第一次通信不被中间人得知信息并篡改。就像之前我们为了第一次传输对称秘钥不被截获而引入非对称秘钥一样，现在我们又陷入了同样的困惑。那是不是需要再次采用一次非对称加密来确保首次公钥传输的安全性呢？那这样就会陷入鸡生蛋蛋生鸡的窘境了。
 
@@ -70,7 +70,7 @@ HTTP采用明文传输，客户端小明与服务端小红之间的信息传输�
 
 具体的过程，我们同样可以看图理解。  
 
-![HTTPS安全传输过程](http://m.qpic.cn/psc?/V11GmsHW1oZK9k/ENmuKd2PHQoigBx2P9ktWczN6QPbRZqtv*yzdLrMsM2nP2pZqeVNhUCoQV6bSAdJrQos*x5lxw1wIrRoi*lmWw!!/b&bo=uQTuAbkE7gEDByI!&rf=viewer_4)  
+![HTTPS安全传输过程](http://xiaosalovejie.top/images/HTTPS%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png)  
 
 至此，我们已经通过一步步的分析解决了HTTP明文通信的不安全问题。那么回过头来，我们之前提到的HTTPS又是怎样工作的呢。
 
